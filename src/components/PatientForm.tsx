@@ -5,8 +5,8 @@ export default function PatientForm() {
 
     const {register, handleSubmit, formState : {errors}} = useForm()
 
-    const registerPatient = () =>{
-        console.log("Nuevo paciente")
+    const registerPatient = (data) =>{
+        console.log(data)
     }
 
     console.log(errors)
@@ -37,8 +37,8 @@ export default function PatientForm() {
                         {...register('name',{
                             required: 'El nombre del paciente es obligatorio',
                             maxLength: {
-                                value : 8,
-                                message: 'Máximo 8 Caracteres',
+                                value : 3,
+                                message: 'Máximo 3 Caracteres',
                             }
                         })}
                     />
@@ -58,11 +58,17 @@ export default function PatientForm() {
                       Propietario 
                   </label>
                   <input  
-                      id="caretaker"
-                      className="w-full p-3  border border-gray-100"  
-                      type="text" 
-                      placeholder="Nombre del Propietario" 
+                    id="caretaker"
+                    className="w-full p-3  border border-gray-100"  
+                    type="text" 
+                    placeholder="Nombre del Propietario" 
+                    {...register('caretaker',{
+                        required: 'El Propietario es obligatorio',
+                    })}
                   />
+                    {errors.caretaker && (
+                        <Error>{errors.caretaker?.message?.toString()}</Error>
+                    )}
                 </div>
   
               <div className="mb-5">
@@ -73,8 +79,18 @@ export default function PatientForm() {
                     id="email"
                     className="w-full p-3  border border-gray-100"  
                     type="email" 
-                    placeholder="Email de Registro" 
+                    placeholder="Email de Registro"
+                    {...register("email", {
+                        required: "El Email es Obligatorio",
+                            pattern: {
+                                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                message: 'Email No Válido'
+                            }
+                    })} 
                 />
+                    {errors.email && (
+                        <Error>{errors.email?.message?.toString()}</Error>
+                    )}
               </div>
   
               <div className="mb-5">
@@ -84,8 +100,14 @@ export default function PatientForm() {
                   <input  
                       id="date"
                       className="w-full p-3  border border-gray-100"  
-                      type="date" 
+                      type="date"
+                      {...register('date',{
+                        required: 'La fecha de alta es obligatoria'
+                      })}
                   />
+                    {errors.date && (
+                        <Error>{errors.date?.message?.toString()}</Error>
+                    )}
               </div>
               
               <div className="mb-5">
@@ -95,8 +117,14 @@ export default function PatientForm() {
                   <textarea  
                       id="symptoms"
                       className="w-full p-3  border border-gray-100"  
-                      placeholder="Síntomas del paciente" 
-                  ></textarea>
+                      placeholder="Síntomas del paciente"
+                      {...register('date',{
+                        required: 'Los sintomas son obligatorios'
+                      })}
+                  />
+                  {errors.symptoms && (
+                        <Error>{errors.symptoms?.message?.toString()}</Error>
+                    )}
               </div>
   
               <input
